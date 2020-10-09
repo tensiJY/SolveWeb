@@ -8,8 +8,8 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
-		<java-version>1.6</java-version>
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+		<java-version>1.8</java-version>
+		<org.springframework-version>5.2.9.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
@@ -110,12 +110,60 @@
 		</dependency>
 	
 		<!-- Test -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
+		</dependency>         -->
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
 		</dependency>        
+		
+		<!-- DB -->
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+		<!-- myBatis에관련된라이브러리-->
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis</artifactId>
+		    <version>3.5.6</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis-spring</artifactId>
+		    <version>2.0.5</version>
+		</dependency>
+
+		<!--스프링과jdbc 드라이버를연결하기위한라이브러리-->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		    <version>5.2.9.RELEASE</version>
+		</dependency>
+
+
+		<!-- 스프링테스트마이바티스와연동되었는지확인하는용도// Junit을통해서스프링테스트-->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-test</artifactId>
+		    <version>5.2.9.RELEASE</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		
+		
 	</dependencies>
     <build>
         <plugins>
