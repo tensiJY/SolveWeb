@@ -1,6 +1,7 @@
 package solve.co.kr.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,4 +25,9 @@ public class TestDAOImpl implements TestDAO{
 		return sql.selectList(namespace+".getAll");
 	}
 
+	@Override
+	public int setUser(HashMap<String, String> map) throws Exception {
+		
+		return sql.insert(namespace+".setUser", map);
+	}
 }
