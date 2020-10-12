@@ -19,7 +19,7 @@ public class TestController {
 	@Inject
 	private TestService ts;
 	
-	@RequestMapping("/all")
+	@RequestMapping("/getAll")
 	public ResponseEntity getAll()throws Exception{
 		//System.out.println(111);
 		List list = ts.getAll();
@@ -43,8 +43,8 @@ public class TestController {
 			@RequestParam HashMap<String, String> map
 			)throws Exception{
 		
-		System.out.println(map.toString());
-		
+		int result = ts.setUser(map);
+		System.out.println(result);
 		return  new ResponseEntity("", HttpStatus.OK);	
 	}
 	

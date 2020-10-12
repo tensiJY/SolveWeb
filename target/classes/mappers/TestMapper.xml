@@ -6,7 +6,7 @@
 <!--  게시판 관련 SQL 등록  -->
 <mapper namespace="Test">
 
-	<select id="getAll" resultType="java.util.Map">
+	<select id="getAll" resultType="java.util.HashMap">
 	<![CDATA[
 		select
 			*
@@ -14,5 +14,18 @@
 			tbl_test
 	]]>
 	</select>
+
+	<insert id="setUser" parameterType="java.util.HashMap">
+	<![CDATA[
+		insert
+			into 
+		tbl_test
+			(t_id, t_name)
+		values
+			(#{t_id},
+			#{t_name}
+			)
+	]]>
+	</insert>
 
 </mapper>
