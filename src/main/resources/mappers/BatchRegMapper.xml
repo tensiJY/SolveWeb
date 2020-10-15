@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+
+<mapper namespace="BatchReg">
+
+	
+	<!-- 등록된 문제 전체 데이터를 조회 -->
+	<select id="getBatchRegList" resultType="hashMap">
+	<![CDATA[
+		SELECT 
+			*
+		FROM 
+			tbl_reg
+		WHERE 
+			reg_is_batch = 'N' 
+		AND 
+			del_flag ='N'
+	]]>	
+	</select>
+	
+	<!-- 전체 문제 테이블에 데이터 저장 -->
+	<insert id="insertBatchSol" parameterType="java.util.List">
+		INSERT INTO
+			tbl_sol
+			(sol_title, sol_answer, 
+			sol_dtl1, sol_dtl2, sol_dtl3, sol_dtl4, sol_dtl5, 
+			sol_cnt, sol_use_date, sol_is_use, add_user_id, add_date, add_time, del_flag)
+	    VALUES
+	    <foreach item="item" index="index" collection="list" separator=",">
+	       (
+				  #{item.reg_title}
+				, #{item.reg_answer}
+				, #{item.reg_dtl1}
+				, #{item.reg_dtl2}
+				, #{item.reg_dtl3}
+				, #{item.reg_dtl4}
+				, #{item.reg_dtl5}
+				, #{item.reg_cnt}
+				, ''
+				, 'N'
+				, #{item.add_user_id}
+				, (select date_format(now(), '%Y%m%d'))
+				, (select date_format(now(), '%H%i%s'))
+				, 'N'
+			)
+	    </foreach>
+	</insert>
+	
+	<update id="updateBatchReg" parameterType="java.util.List">
+		<foreach item="item" index="index" collection="list" separator=";">
+			UPDATE 
+				tbl_reg
+			SET 
+				reg_is_batch='Y'
+				, del_flag='Y'
+			WHERE 
+				reg_idx=#{item.reg_idx}
+		</foreach>
+	</update>
+	
+	
+	 
+	
+</mapper>

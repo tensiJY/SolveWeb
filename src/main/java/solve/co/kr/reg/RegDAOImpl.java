@@ -10,16 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RegDAOImpl implements RegDAO {
 	
-	@Inject
-	private SqlSession sql;
 	
-	private String namespace = "reg";
-
-	@Override
-	public List getBatchRegList() throws Exception {
-		
-		return sql.selectList(namespace+".getBatchRegList");
-	}
 	
 	
 
