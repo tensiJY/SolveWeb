@@ -12,16 +12,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import solve.co.kr.reg.RegService;
+
 @RestController
 @RequestMapping("/test")
 public class TestController {
 	
 	@Inject
 	private TestService ts;
+
 	
 	@RequestMapping("/getAll")
 	public ResponseEntity getAll()throws Exception{
-		//System.out.println(111);
+		
 		List list = ts.getAll();
 		return  new ResponseEntity(list, HttpStatus.OK);	
 	}

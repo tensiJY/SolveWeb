@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!--  게시판 관련 SQL 등록  -->
+<mapper namespace="reg">
+
+	
+	<!-- 등록된 문제 전체 데이터를 조회 -->
+	<select id="getBatchRegList" resultType="java.util.HashMap">
+	<![CDATA[
+		SELECT 
+			reg_idx 
+		FROM 
+			tbl_reg
+		WHERE 
+			reg_is_batch = 'N' 
+		AND 
+			del_flag ='N'
+	]]>	
+	</select>
+	
+</mapper>
