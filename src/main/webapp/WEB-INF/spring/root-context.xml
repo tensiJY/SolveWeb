@@ -14,7 +14,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-		<property name="url" value="jdbc:mariadb://localhost:3300/solve" />
+		<property name="url" value="jdbc:mariadb://localhost:3300/solve?allowMultiQueries=true" />
 		<property name="username" value="root" />
 		<property name="password" value="1234" />
 	</bean>
@@ -37,16 +37,17 @@
 	<context:component-scan base-package="solve.co.kr"></context:component-scan>
 	
 	<!-- 스케줄을 위한 bean 처리 id는 임의 설정으로 지정 : 인터페이스는 지정안됨.. class임 -->
-	<bean id="regService" class="solve.co.kr.reg.RegServiceImpl" />
+	<bean id="batchRegService" class="solve.co.kr.batch.reg.BatchRegServiceImpl" />
+	<bean id="batchSolService" class="solve.co.kr.batch.sol.BatchSolServiceImpl" />
 	
 	<!-- 잡등록 -->
-	<bean name="RegBatch" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"><!-- Quartz 2.x 버전 -->
-		<property name="jobClass" value="solve.co.kr.batch.RegBatch"/>
+	<bean name="BatchReg" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"><!-- Quartz 2.x 버전 -->
+		<property name="jobClass" value="solve.co.kr.batch.reg.BatchReg"/>
 		
 		<!-- 서비스등록 -->
 		<property name="jobDataAsMap">
             <map>
-                <entry key="rs" value-ref="regService"></entry>
+                <entry key="batchRegService" value-ref="batchRegService"></entry>
                 <!-- Inject /Autowired 가 되지 않아서 강제로 주입해야 한다. --> 
             </map>
         </property>
@@ -54,26 +55,25 @@
 
 	<!-- 크론 등록 -->
 	<bean id="cronTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
-	   	<property name="jobDetail" ref="RegBatch" />
+	   	<property name="jobDetail" ref="BatchReg" />
 	   	<property name="cronExpression" value="0 0/1 * 1/1 * ? *"/> <!-- 1분 -->  
    	 	<!-- <property name="cronExpression" value="0 0 0/1 1/1 * ? *"/> --> <!-- 매시간 -->  
  	</bean> 
  	
  	
 	<!-- 여기서 추가 함 2번째 -->
-	<bean name="SolBatch" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-		<property name="jobClass" value="solve.co.kr.batch.SolBatch"/>
+	<bean name="BatchSol" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="solve.co.kr.batch.sol.BatchSol"/>
 		<property name="jobDataAsMap">
             <map>
-                <entry key="rs" value-ref="regService"></entry>
+                <entry key="batchSolService" value-ref="batchSolService"></entry>
             </map>
         </property>
 	</bean>
 
 	<bean id="cronTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
-	   	<property name="jobDetail" ref="SolBatch" />  
-   	 	<property name="cronExpression" value="0 0/1 * 1/1 * ? *"/>
-   	 	<!-- 0 0 0 1/1 * ? * --> <!-- 매일 00시 -->
+	   	<property name="jobDetail" ref="BatchSol" />  
+   	 	<property name="cronExpression" value="0 0/1 * 1/1 * ? *"/>	<!-- 1분 -->
  	</bean>
 	
 		

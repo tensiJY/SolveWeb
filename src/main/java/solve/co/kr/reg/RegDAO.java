@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface RegDAO {
 
-	public List getBatchRegList() throws Exception;
+	
 
 	
 

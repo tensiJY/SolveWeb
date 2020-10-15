@@ -12,11 +12,6 @@ public class RegServiceImpl implements RegService{
 	@Inject
 	private RegDAO regDao;
 	
-	@Override
-	public List getBatchRegList() throws Exception {
-		
-		return regDao.getBatchRegList();
-	}
 
 	
 }

@@ -1,4 +1,4 @@
-package solve.co.kr.batch;
+package solve.co.kr.batch.sol;
 
 import javax.inject.Inject;
 
@@ -7,36 +7,28 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-
-import solve.co.kr.reg.RegService;
 /**
  * 
  * 매일 00시 마다 하루 문제를 설정
  *
  */
-public class SolBatch extends QuartzJobBean{
+public class BatchSol extends QuartzJobBean{
 	
 	//	배치 중 중복 실행을 막음
 	private static boolean isRunning = true;
 	
-	private final Logger logger = LoggerFactory.getLogger(SolBatch.class);
+	private final Logger logger = LoggerFactory.getLogger(BatchSol.class);
 	
-	//	강제 주입을 위해 getter setter 설정
-	private RegService rs;
-	
+	private BatchSolServiceImpl batchSolService;
 
-	
-	public RegService getRs() {
-		return rs;
+	public BatchSolServiceImpl getBatchSolService() {
+		return batchSolService;
 	}
 
 	@Inject
-	public void setRs(RegService rs) {
-		this.rs = rs;
+	public void setBatchSolService(BatchSolServiceImpl batchSolService) {
+		this.batchSolService = batchSolService;
 	}
-
-
-
 
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
@@ -45,7 +37,7 @@ public class SolBatch extends QuartzJobBean{
 		
 		if(isRunning) {
 			logger.info("-----------------");
-			logger.info("SolBatch start");
+			logger.info("Batch Sol start");
 			isRunning = false;
 			
 			try {
@@ -56,13 +48,10 @@ public class SolBatch extends QuartzJobBean{
 				e.printStackTrace();
 			}
 			
-			logger.info("SolBatch end");
+			logger.info("Batch Sol end");
 			logger.info("-----------------");
 			isRunning = true;
-		}else {
-			logger.info("SolBatch isRunning");
 		}
-		
 		
 	}
 }
