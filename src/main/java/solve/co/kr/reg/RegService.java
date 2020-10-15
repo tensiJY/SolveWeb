@@ -1,5 +1,8 @@
 package solve.co.kr.reg;
 
-public interface RegService {
+import java.util.List;
 
+public interface RegService{
+
+	public List getBatchRegList()throws Exception;
 }

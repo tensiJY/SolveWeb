@@ -2,6 +2,8 @@ package solve.co.kr.reg;
 
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,11 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RegController.class);
-
+	
+	@Inject
+	private RegService res;
+	
+	/**
+	 * 문제를 저장하는 함수
+	 * @param dataMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/insert")
 	public ResponseEntity regInsert( @RequestParam HashMap<String,Object> dataMap ) throws Exception{
 		int result_code = 0;
 		HashMap returnMap = new HashMap();
+		
 		
 		
 		if(dataMap.isEmpty()) {
@@ -28,9 +40,11 @@ public class RegController {
 		
 		
 		try {
+			//
+			
+			
 			result_code = 1;
 			
-			System.out.println(dataMap.toString());
 			
 		}catch(Exception e){
 			
