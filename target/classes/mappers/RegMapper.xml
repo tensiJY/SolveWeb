@@ -4,21 +4,85 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <!--  게시판 관련 SQL 등록  -->
-<mapper namespace="reg">
-
+<mapper namespace="Reg">
 	
-	<!-- 등록된 문제 전체 데이터를 조회 -->
-	<select id="getBatchRegList" resultType="java.util.HashMap">
+	<insert id="insertReg" parameterType="java.util.HashMap">
 	<![CDATA[
-		SELECT 
-			reg_idx 
-		FROM 
+		INSERT INTO 
 			tbl_reg
-		WHERE 
-			reg_is_batch = 'N' 
-		AND 
-			del_flag ='N'
-	]]>	
+			(reg_title, reg_answer, reg_dtl1, reg_dtl2, reg_dtl3, reg_dtl4, reg_dtl5, reg_cnt
+			, reg_is_batch, add_user_id, add_date, add_time, del_flag)
+		VALUES
+			(#{reg_title}
+			,#{reg_answer}
+			,#{reg_dtl1}
+			,#{reg_dtl2}
+			,#{reg_dtl3}
+			,#{reg_dtl4}
+			,#{reg_dtl5}
+			,#{reg_cnt}
+			, 'N'
+			,''
+			, (select date_format(now(), '%Y%m%d'))
+			, (select date_format(now(), '%H%i%s'))
+			, 'N'
+			)
+		
+	]]>
+	</insert>	
+	
+	
+	<!-- 연습 문제 총 갯수 구하기 -->
+	<select id="getExCnt" resultType="int">
+		select 
+			count(*) as cnt 
+		from 
+			tbl_sol	
+	</select>
+	
+	<!-- 연습 문제 리스트 -->
+	<select id="getExList" resultType="java.util.HashMap" parameterType="hashMap">
+		select
+			*
+		from (
+			select 
+				@row_idx:=@row_idx+1 as row_idx
+				,sol_idx 
+				, sol_title 
+				, sol_answer 
+				, sol_dtl1 
+				, sol_dtl2 
+				, sol_dtl3 
+				, sol_dtl4 
+				, sol_dtl5 
+				, sol_cnt
+			from
+				(select 
+					@row_idx:=0 as row_idx 
+					, sol_idx
+					, sol_title 
+					, sol_answer 
+					, sol_dtl1 
+					, sol_dtl2 
+					, sol_dtl3 
+					, sol_dtl4 
+					, sol_dtl5 
+					, sol_cnt 
+				from 
+					tbl_sol
+				where
+					del_flag ='N'
+				order by
+					add_date desc
+					, add_time desc
+					, sol_idx desc
+				) t
+			)a
+		where
+			row_idx between 
+				#{start_num} 
+			and 
+				#{end_num}
 	</select>
 	
 </mapper>

@@ -13,4 +13,10 @@ public class BatchSolDAOImpl implements BatchSolDAO{
 	
 	private String namespace = "BatchSol";
 
+	@Override
+	public int getSolNotUseCount() throws Exception {
+		
+		return sql.selectOne(namespace+".getSolNotUseCount");
+	}
+
 }

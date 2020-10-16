@@ -38,7 +38,11 @@ public class TestController {
 		System.out.println("t_id : " + t_id);
 		System.out.println("t_name : " + t_name);
 		
-		return  new ResponseEntity("", HttpStatus.OK);	
+		HashMap map = new HashMap();
+		map.put("t_id", t_id);
+		map.put("t_name", t_name);
+		
+		return  new ResponseEntity(map, HttpStatus.OK);	
 	}
 	
 	@RequestMapping(value="/setUser2", method=RequestMethod.GET)
