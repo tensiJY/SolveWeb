@@ -49,6 +49,7 @@
 	    </foreach>
 	</insert>
 	
+	<!-- 전체 문제 옮긴후, 옮긴 파일 플래그 -->
 	<update id="updateBatchReg" parameterType="java.util.List">
 		<foreach item="item" index="index" collection="list" separator=";">
 			UPDATE 

@@ -6,10 +6,11 @@
 
 <mapper namespace="BatchSol">
 	
-	<select id="getBatchSolIdxList" resultType="hashMap">
+	<!-- 사용하지 않는 전체 문제 갯수 구하기 -->
+	<select id="getSolNotUseCount" resultType="int">
 	<![CDATA[
 		select 
-			sol_idx 
+			count(sol_idx) as cnt 
 		from 
 			tbl_sol 
 		where 
