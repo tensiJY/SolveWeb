@@ -1,6 +1,5 @@
 package solve.co.kr.batch.reg;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,10 +9,6 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.transaction.annotation.Transactional;
-
-import solve.co.kr.reg.RegService;
-import solve.co.kr.reg.RegServiceImpl;
 
 /**
  * 
@@ -54,6 +49,7 @@ public class BatchReg extends QuartzJobBean{
 				List dataList = batchRegService.getBatchRegList();
 				
 				if(dataList.size() != 0) {
+					//	문제 테이블로 옮김
 					batchRegService.insertBatchSol(dataList);
 					
 					logger.info("Batch Reg Insert Success: " + dataList.size());

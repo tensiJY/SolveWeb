@@ -1,6 +1,8 @@
 package solve.co.kr.batch.sol;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -45,42 +47,53 @@ public class BatchSol extends QuartzJobBean{
 			isRunning = false;
 			
 			try {
+				
+				//	오늘의 문제를 등록하기 위한 등록된 문제 전체 갯수를 구함
 				int totalCount = batchSolService.getSolNotUseCount();
-				System.out.println(totalCount);
 				
-				ArrayList ranList = new ArrayList();
-				
-				boolean bool = true;
-				
-				while(bool) {
-					int ran = StringUtil.getRandom(totalCount);
+				if(totalCount != 0) {
 					
-					if(ranList.size()==0) {
-						ranList.add(ran);
+					//	문제를 고름
+					ArrayList ranList = getRanNumList(totalCount);
+					
+					//	문제를 고름(index 를 가져옴)
+					List solIdxList = batchSolService.getSolIdxList(ranList);
+					
+					
+					List updateList = new ArrayList();
+					
+					String today = StringUtil.getToday();
+					for(int i=0; i<solIdxList.size();i++) {
+						HashMap idxMap = (HashMap) solIdxList.get(i);
 						
+						HashMap dataMap = new HashMap();
+						
+						dataMap.put("sol_use_date", today);
+						dataMap.put("sol_idx", idxMap.get("sol_idx"));
+						
+						updateList.add(dataMap);
+					}
+					
+					//	오늘의 문제를 등록
+					batchSolService.batchSolUpdate(updateList);
+					
+					//	app에서 등록한 임시문제 테이블 데이터를 삭제
+					//	삭제할 데이터가 있는지 확인
+					int isDelReg = batchSolService.isDelReg();
+					if(isDelReg == 0) {
+						logger.info("reg delete data : 0");
 					}else {
-						for(int j=0; j<ranList.size(); j++) {
-							int temp = (int) ranList.get(j);
-							if(temp==ran) {
-								break;
-							}else {
-								ranList.add(ran);
-							}
-						}
-						
+						int result = batchSolService.batchDelReg();
+						logger.info("Reg delete success : " + isDelReg);
 					}
 					
-					System.out.println(ran);
-					if(ranList.size()==3) {
-						bool = false;
-					}
+					
+				}else {
+					
+					logger.info("Batch Sol totalCount is 0");
 				}
 				
-				
-				for(int i=0; i<ranList.size();i++) {
-					System.out.println(ranList.get(i));
-				}
-				
+								
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -93,6 +106,49 @@ public class BatchSol extends QuartzJobBean{
 			isRunning = true;
 		}
 		
+	}
+	
+	
+	private ArrayList getRanNumList(int totalCount) {
+		int todaySolveCount = 3;
+		
+		ArrayList ranList = new ArrayList();
+		while(true) {
+			
+			int ran = StringUtil.getRandom(totalCount);
+			
+			if(ranList.size()==0) {
+				//System.out.println("0 : " + ran);
+				ranList.add(ran);
+			}else {
+				boolean check = false;
+				
+				for(int i=0; i<ranList.size(); i++) {
+					int temp = (int) ranList.get(i);
+					if(temp == ran) {
+						
+						System.out.println("equal : " + ran);
+						break;
+						
+					}else {
+						check = true;
+						
+					}
+				}
+				
+				if(check) {
+					ranList.add(ran);
+				}
+				
+			}
+			
+			if(ranList.size()==todaySolveCount) {
+				break;
+			}
+			
+		}
+		
+		return ranList;
 	}
 	
 	
