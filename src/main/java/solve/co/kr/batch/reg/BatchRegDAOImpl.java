@@ -28,6 +28,7 @@ public class BatchRegDAOImpl implements BatchRegDAO{
 	
 		sql.insert(namespace+".insertBatchSol", dataList);
 		sql.update(namespace+".updateBatchReg", dataList);
+		
 	}
 
 	

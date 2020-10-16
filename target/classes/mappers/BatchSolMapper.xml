@@ -19,20 +19,67 @@
 	]]>	
 	</select>
 	
+	<!-- arrayList 인경우  -->
+	<select id="getSolIdxList" resultType="java.util.HashMap" parameterType="java.util.List">
+		select
+			*
+		from (
+			select 
+				@row_idx:=@row_idx+1 as row_idx
+				,sol_idx
+			from
+				(select 
+					@row_idx:=0 as row_idx 
+					, sol_idx
+				from 
+					tbl_sol
+				where
+					del_flag ='N'
+					and sol_is_use ='N'
+				order by
+					add_date desc
+					, add_time desc
+					, sol_idx desc
+				) t
+			)a
+		where
+			row_idx in 
+			<foreach item="item" index="index" collection="list" separator="," open="(" close=")">	
+				#{item}
+			</foreach>
+			
+	</select>
 	
-	<update id="updateBatchReg" parameterType="java.util.List">
+	
+	<update id="batchSolUpdate" parameterType="java.util.List">
 		<foreach item="item" index="index" collection="list" separator=";">
 			UPDATE 
-				tbl_reg
+				tbl_sol
 			SET 
-				reg_is_batch='Y'
-				, del_flag='Y'
+				sol_is_use = 'Y' 
+				, sol_use_date = #{item.sol_use_date}
 			WHERE 
-				reg_idx=#{item.reg_idx}
+				sol_idx=#{item.sol_idx}
 		</foreach>
 	</update>
 	
+	<select id="isDelReg" resultType="int">
+		select
+			count(*) as cnt
+		from
+			tbl_reg
+		where
+			reg_is_batch = 'Y' 
+			and del_flag ='Y' 
+	</select>
 	
+	<delete id="batchDelReg">
+		delete from 
+			tbl_reg 
+		where 
+				reg_is_batch = 'Y' 
+			and del_flag ='Y'
+	</delete>
 	 
 	
 </mapper>

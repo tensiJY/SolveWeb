@@ -25,34 +25,47 @@ public class TestUtil {
 		
 		ArrayList ranList = new ArrayList();
 		
-		for(int i=0; ; i++) {
+		
+		
+		while(true) {
+		
+			
 			int ran = StringUtil.getRandom(totalCount);
-			if(i==0) {
+			
+			if(ranList.size()==0) {
+				//System.out.println("0 : " + ran);
 				ranList.add(ran);
 			}else {
-				for(int j=0; j<ranList.size(); j++) {
-					int temp = (int) ranList.get(j);
-					
-					if(temp==ran) {
+				boolean check = false;
+				
+				for(int i=0; i<ranList.size(); i++) {
+					int temp = (int) ranList.get(i);
+					if(temp == ran) {
 						
+						System.out.println("equal : " + ran);
 						break;
-					}else {
-						ranList.add(ran);
 						
+					}else {
+						check = true;
 						
 					}
 				}
+				
+				if(check) {
+					ranList.add(ran);
+				}
+				
 			}
 			
-			System.out.println(ran);
-			if(ranList.size()== 3) {
+			if(ranList.size()==3) {
 				break;
 			}
+			
 		}
 		
 		
 		
-		
+		//System.out.println(ranList.size());
 		
 	}
 }

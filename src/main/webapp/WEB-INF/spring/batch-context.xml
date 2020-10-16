@@ -34,8 +34,8 @@
 	<!-- 크론 등록 -->
 	<bean id="cronTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
 	   	<property name="jobDetail" ref="BatchReg" />
-	   	<property name="cronExpression" value="0 0/1 * 1/1 * ? *"/> <!-- 1분 -->  
-   	 	<!-- <property name="cronExpression" value="0 0 0/1 1/1 * ? *"/> --> <!-- 매시간 -->  
+	   	<!-- <property name="cronExpression" value="0 0/1 * 1/1 * ? *"/> --> <!-- 1분 -->  
+   	 	<property name="cronExpression" value="0 0 0/1 1/1 * ? *"/> <!-- 매시간 -->  
  	</bean> 
  	
  	
@@ -51,7 +51,8 @@
 
 	<bean id="cronTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
 	   	<property name="jobDetail" ref="BatchSol" />  
-   	 	<property name="cronExpression" value="0 0/1 * 1/1 * ? *"/>	<!-- 1분 -->
+   	 	<!-- <property name="cronExpression" value="0 0/1 * 1/1 * ? *"/> -->	<!-- 1분 -->
+   	 	<property name="cronExpression" value="0 0 0 1/1 * ? *"/>
  	</bean>
 	
 		
