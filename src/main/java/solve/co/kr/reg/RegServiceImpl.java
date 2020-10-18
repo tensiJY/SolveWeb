@@ -1,5 +1,6 @@
 package solve.co.kr.reg;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,4 +32,9 @@ public class RegServiceImpl implements RegService{
 		return regDao.getExList(hashMap);
 	}
 	
+	@Override
+	public ArrayList getRegList() throws Exception {
+		
+		return regDao.getRegList();
+	}
 }

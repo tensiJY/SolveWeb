@@ -1,5 +1,6 @@
 package solve.co.kr.reg;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +11,8 @@ public interface RegDAO {
 	public int getExCnt() throws Exception;
 
 	public List getExList(HashMap hashMap) throws Exception;
+
+	public ArrayList getRegList() throws Exception;
 
 	
 

@@ -85,4 +85,14 @@
 				#{end_num}
 	</select>
 	
+	<select id="getRegList" resultType="java.util.HashMap">
+		select 
+			* 
+		from 
+			tbl_sol  
+		where 
+				sol_use_date = (select date_format(now(), '%Y%m%d')) 
+			and sol_is_use ='Y'
+	</select>
+	
 </mapper>

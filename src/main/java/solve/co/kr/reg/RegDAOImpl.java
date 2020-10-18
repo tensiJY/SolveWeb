@@ -1,5 +1,6 @@
 package solve.co.kr.reg;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,6 +36,13 @@ public class RegDAOImpl implements RegDAO {
 		
 		return sql.selectList(namespace+".getExList", hashMap);
 	}
+
+	@Override
+	public ArrayList getRegList() throws Exception {
+		
+		return (ArrayList) sql.selectList(namespace+".getRegList");
+	}
+	
 	
 	
 }
