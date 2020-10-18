@@ -1,5 +1,6 @@
 package solve.co.kr.reg;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,7 +75,7 @@ public class RegController {
 	 *	연습문제 데이터 가져오기 
 	 */
 	@RequestMapping("/getExList")
-	public ResponseEntity getExList(@RequestParam HashMap dataMap)throws Exception{
+	public ResponseEntity getExList(@RequestBody HashMap dataMap )throws Exception{
 		
 		HashMap returnMap = new HashMap();
 		
@@ -118,6 +121,44 @@ public class RegController {
 			returnMap.put("result_code", result_code);
 		}
 		
+		
+		return new ResponseEntity(returnMap, HttpStatus.OK);
+	}
+	
+	/**
+	 * 오늘의 문제 가져오기
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getRegList")
+	public ResponseEntity getRegList(@RequestBody HashMap paramMap)throws Exception{
+		
+		HashMap returnMap = new HashMap();
+		
+		int result_code = 0;
+		
+		if(paramMap.isEmpty()) {
+			throw new Exception("param is not");
+		}
+		
+		
+		try {
+			result_code = 1;
+			ArrayList regList = regSer.getRegList();
+			returnMap.put("data_list", regList);
+			returnMap.put("result_code", result_code);
+			
+			
+			
+		}catch(Exception e) {
+			result_code = 0;
+			logger.error("get reg list error");
+			logger.error(e.toString());
+		}finally {
+			
+			returnMap.put("result_code", result_code);
+		}
 		
 		return new ResponseEntity(returnMap, HttpStatus.OK);
 	}
