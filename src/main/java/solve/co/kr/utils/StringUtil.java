@@ -1,6 +1,8 @@
 package solve.co.kr.utils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Random;
 
@@ -15,6 +17,15 @@ public class StringUtil {
 		
 		return df.format(new Date());
 	}
+	
+	/**
+	 * 내일 날짜를 구함
+	 */
+	public static String getNextDay() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		return formatter.format(LocalDate.now().plusDays(1));
+	}
+	
 	
 	/**
 	 * 랜덤 수를 생성

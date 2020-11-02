@@ -15,7 +15,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import solve.co.kr.utils.StringUtil;
 /**
  * 
- * 매일 00시 마다 하루 문제를 설정
+ * 매일 22시 마다 다음날 DAY 문제를 설정
  *
  */
 public class BatchSol extends QuartzJobBean{
@@ -62,13 +62,13 @@ public class BatchSol extends QuartzJobBean{
 					
 					List updateList = new ArrayList();
 					
-					String today = StringUtil.getToday();
+					String nextDay = StringUtil.getNextDay();
 					for(int i=0; i<solIdxList.size();i++) {
 						HashMap idxMap = (HashMap) solIdxList.get(i);
 						
 						HashMap dataMap = new HashMap();
 						
-						dataMap.put("sol_use_date", today);
+						dataMap.put("sol_use_date", nextDay);
 						dataMap.put("sol_idx", idxMap.get("sol_idx"));
 						
 						updateList.add(dataMap);
