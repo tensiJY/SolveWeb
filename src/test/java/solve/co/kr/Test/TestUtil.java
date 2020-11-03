@@ -1,6 +1,8 @@
 package solve.co.kr.Test;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -11,6 +13,12 @@ import solve.co.kr.utils.StringUtil;
 
 public class TestUtil {
 
+	@Test
+	public void nextDay() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		System.out.println("nextDay : " + formatter.format(LocalDate.now().plusDays(1)));;
+	}
+	
 	@Test
 	public void today() {
 		SimpleDateFormat df = new SimpleDateFormat("YYYYMMdd");
