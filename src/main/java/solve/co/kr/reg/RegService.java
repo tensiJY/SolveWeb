@@ -14,5 +14,7 @@ public interface RegService{
 
 	public ArrayList getRegList() throws Exception;
 
+	public List getDataAll() throws Exception;
+
 	
 }

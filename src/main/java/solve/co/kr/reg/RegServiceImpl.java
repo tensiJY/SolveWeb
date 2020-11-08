@@ -37,4 +37,10 @@ public class RegServiceImpl implements RegService{
 		
 		return regDao.getRegList();
 	}
+
+	@Override
+	public List getDataAll() throws Exception {
+		
+		return regDao.getDataAll();
+	}
 }

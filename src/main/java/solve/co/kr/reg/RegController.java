@@ -74,7 +74,7 @@ public class RegController {
 	/**
 	 *	연습문제 데이터 가져오기 
 	 */
-	@RequestMapping("/getExList")
+	@RequestMapping(value = "/getExList" )
 	public ResponseEntity getExList(@RequestBody HashMap dataMap )throws Exception{
 		
 		HashMap returnMap = new HashMap();
@@ -162,5 +162,43 @@ public class RegController {
 		
 		return new ResponseEntity(returnMap, HttpStatus.OK);
 	}
+	
+	/**
+	 * 전체 데이터 가져오기
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getDataAll")
+	public ResponseEntity getDataAll(@RequestBody HashMap paramMap) throws Exception{
+		
+		HashMap returnMap = new HashMap();
+		
+		int result_code = 0;
+		
+		try {
+			result_code = 1;
+			String type = String.valueOf(paramMap.get("type"));
+			List dataList = null;
+			
+			if("1".equals(type)) {
+				dataList = regSer.getDataAll();
+			}else if("2".equals(type)) {
+				
+			}
+			
+			returnMap.put("data_list", dataList);
+			
+		}catch(Exception e) {
+			result_code = 0;
+			logger.error("getDataAll error");
+		}finally {
+			
+			returnMap.put("result_code", result_code);
+		}
+		
+		
+		return new ResponseEntity(returnMap, HttpStatus.OK);
+	}	
 	
 }
