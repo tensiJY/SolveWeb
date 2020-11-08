@@ -43,6 +43,10 @@ public class RegDAOImpl implements RegDAO {
 		return (ArrayList) sql.selectList(namespace+".getRegList");
 	}
 	
-	
+	@Override
+	public List getDataAll() throws Exception {
+		
+		return sql.selectList(namespace+".getDataAll");
+	}
 	
 }

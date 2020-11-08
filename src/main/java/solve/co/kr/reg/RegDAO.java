@@ -14,6 +14,8 @@ public interface RegDAO {
 
 	public ArrayList getRegList() throws Exception;
 
+	public List getDataAll() throws Exception;
+
 	
 
 	

@@ -95,4 +95,16 @@
 			and sol_is_use ='Y'
 	</select>
 	
+	<select id="getDataAll" resultType="java.util.HashMap">
+	<![CDATA[
+		select
+			*
+		from
+			tbl_sol
+		where
+			del_flag = 'N'
+		and sol_idx
+	]]> 
+	</select>
+	
 </mapper>
